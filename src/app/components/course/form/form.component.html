@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="container">
+    <h3 align="left" style="color:#ec6608;font-size:28px;">Seleccione la fecha de inicio y horario de su preferencia</h3>
+    <hr style="border-top: 1px solid #ec6608;">
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <app-calendar (open)="showSchedule($event)"></app-calendar>
+    <app-schedule *ngIf="schedule" (open)="showData($event)"></app-schedule>
+  </div>
+</div>
+<div *ngIf="data">
+  <app-selected></app-selected>
+  <app-data (open)="nextStep($event)"></app-data>
+</div>

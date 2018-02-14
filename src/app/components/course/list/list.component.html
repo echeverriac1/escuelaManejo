@@ -1,0 +1,127 @@
+<!-- IMPORTE DE SLICK -->
+<div class="box">
+  <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h2 style="color:white">Elige tu Sucursal y Curso</h2><br>
+          <div class="form-group">
+            <select class="form-control" id="sel1" (change)="onChange($event.target.value)">
+              <option *ngFor="let city of cities" [value]="city.ID_CIUDAD" (change)="changeLocation(city.latitud, city.longitud)">
+                {{city.NOMBRE_CIUDAD}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-9" style="padding-left: 0px !important;">
+          <!--img src="assets/Dewi/img/newcalama.png" width="878px"/-->
+          <agm-map [latitude]="lat" [longitude]="lng" [zoom]=15>
+            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+          </agm-map>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-fluid">
+          <div class="your-class">
+            <!--div><img src="//lorempixel.com/300/200/transport/1" /></div-->
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/1.png" (click)="onSelectCategory(14)"/></div>
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/2.png" (click)="onSelectCategory(19)"/></div>
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/3.png" (click)="onSelectCategory(23)"/></div>
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/4.png" (click)="onSelectCategory(18)"/></div>
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/5.png" (click)="onSelectCategory(24)"/></div>
+            <div><img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/productos/6.png" (click)="onSelectCategory(69)"/></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div id="courses-list" class="jumbotron courses-list" style="display: none;">
+  <div class="container">
+    <div>
+      <h1><span></span></h1>
+      <h2 align="left">{{getCategoryName}}</h2>
+      <h3 align="left">Vehiculos Particulares</h3>
+      <hr>
+      <h4 align="left">Cursos Disponibles</h4>
+      <h6 align="left">Seleccione un curso de su interés para ver fechas y horarios disponibles</h6>
+      <!--<p><a class="btn btn-primary btn-lg" href="#" role="button">Get it now</a></p>-->
+    </div>
+    <div class="box">
+      <div class="container">
+        <ngx-slick [config]="slideConfig">
+            <div ngxSlickItem *ngFor="let curso of cursos; let i = index;">
+                <div (click)="select(i, curso.id_curso, curso.requisitos)" style="height:200px;" class="{{'bg-orange'+getOrange(i)}}">
+                  <div class="row category_box">
+                    <div class="col-md-4 category_img" align="center">
+                      <img src="http://peuman.cl/apps/ventaonline_20170925/dist/assets/img/Iconos/clase_b.png"/>
+                    </div>
+                    <div class="col-md-8 category_row">
+                      <h5>{{curso.nombre}}</h5>
+                      <p>{{getDisponibles(curso.modalidad)}} Cupos Disponiles</p>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </ngx-slick>
+      </div>
+      <div class="row" align="right">
+      <div class="col-md-6" style="padding-right:0px;" align="left" *ngIf="activarFlecha">
+          <div class="{{'bg-orange'+flecha}}">
+            <div *ngFor="let modalidad of modalidadesSeleccionadas; let i = index;" class="radio">
+              <h6 style="color:white"><input type="radio" name="optradio1" (change)="nextStep(modalidad.id_modalidad)">{{modalidad.nombre}} - {{calcularDias(modalidad.fecha_inicio, modalidad.fecha_fin)}} Dias</h6>
+            </div>
+        </div>
+        <div class="{{'flecha'+flecha}}"></div>
+        <p>{{requisitos}}</p>
+      </div>
+    </div>
+    </div>
+
+
+
+  </div>
+</div>
+<div class="container courses-no-list" id="courses-no-list" style="display: none;">
+  <div>
+      <hr>
+      <h1><span></span></h1>
+      <h2 align="left">No existen cursos de la categoria seleccionada en esa ciudad</h2>
+      <hr>
+  </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+<script type="text/javascript" >
+   $(document).ready(function(){
+   $('.your-class').slick({
+      slidesToShow: 4,
+     slidesToScroll: 1,
+     autoplay: false,
+     autoplaySpeed: 2000,
+   });
+   $('.my-class').slick({
+      slidesToShow: 2,
+     slidesToScroll: 1,
+     autoplay: false,
+     autoplaySpeed: 2000,
+   });
+  });
+</script>
+<script type="text/javascript" >
+  $('.slider-for').slick({
+   slidesToShow: 1,
+   slidesToScroll: 1,
+   arrows: false,
+   fade: true,
+   autoplay: true,
+   asNavFor: '.slider-nav'
+  });
+  $('.slider-nav').slick({
+   slidesToShow: 2,
+   slidesToScroll: 1,
+   asNavFor: '.slider-for',
+   dots: false,
+   centerMode: false,
+   focusOnSelect: true,
+
+  });
+</script>
